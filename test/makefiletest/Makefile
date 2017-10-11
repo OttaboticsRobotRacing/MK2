@@ -12,10 +12,10 @@ XFLAGS		= -g -Wall -std=c++11
 # Directory macros
 ##################################################
 
-IDIR		= include
-OBJDIR		= build
-SRCDIR		= src
-OUTDIR		= bin
+IDIR		= include/
+OBJDIR		= build/
+SRCDIR		= src/
+OUTDIR		= bin/
 
 ##################################################
 # Required object dependencies
@@ -48,13 +48,13 @@ CXXFLAGS	= $(INCDIRS) $(XFLAGS)
 .PHONY: all
 all: $(OBJECTS)
 	@echo "\n----- Compiling main -----\n"
-	@echo $(CXX) $(OBJECTS) $(SRCDIR)/main.cpp -o $(OUTDIR)/main $(CXXFLAGS)
+	@echo $(CXX) $(OBJECTS) $(SRCDIR)main.cpp -o $(OUTDIR)main $(CXXFLAGS)
 	@mkdir -p build
 	@mkdir -p bin
 	@mkdir -p lib
-	$(CXX) $(OBJECTS) $(SRCDIR)/main.cpp -o $(OUTDIR)/main $(CXXFLAGS)
+	$(CXX) $(OBJECTS) $(SRCDIR)main.cpp -o $(OUTDIR)main $(CXXFLAGS)
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
+$(OBJDIR)%.o: $(SRCDIR)%.cpp
 	@echo "\n----- Compiling object file:" $@ "from" $< "-----\n"
 	@echo $(CXX) -c -o $@ $< $(CXXFLAGS)
 	@mkdir -p build
@@ -64,4 +64,4 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 .PHONY: clean
 clean:
 	@echo "\n----- Cleaning object files -----\n"
-	rm -rf $(OBJDIR)/*.o
+	rm -rf $(OBJDIR)*.o
