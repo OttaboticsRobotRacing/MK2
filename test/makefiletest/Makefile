@@ -12,7 +12,7 @@ XFLAGS		= -g -Wall -std=c++11
 # Directory macros
 ##################################################
 
-IDIR		= ./include
+IDIR		= include
 OBJDIR		= build
 SRCDIR		= src
 OUTDIR		= bin
@@ -32,7 +32,7 @@ OBJECTS		= $(patsubst %,$(OBJDIR)/%,$(_OBJECTS))
 INC1		= `pkg-config --cflags --libs opencv`
 # User-created headers
 INC2		= -I$(IDIR)
-
+# All include directories and libraries
 INCDIRS		= $(INC1) $(INC2)
 
 ##################################################
@@ -49,11 +49,15 @@ CXXFLAGS	= $(INCDIRS) $(XFLAGS)
 all: $(OBJECTS)
 	@echo "\n----- Compiling main -----\n"
 	@echo $(CXX) $(OBJECTS) $(SRCDIR)/main.cpp -o $(OUTDIR)/main $(CXXFLAGS)
+	@mkdir -p build
+	@mkdir -p bin
+	@mkdir -p lib
 	$(CXX) $(OBJECTS) $(SRCDIR)/main.cpp -o $(OUTDIR)/main $(CXXFLAGS)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	@echo "\n----- Compiling object file:" $@ "from" $< "-----\n"
 	@echo $(CXX) -c -o $@ $< $(CXXFLAGS)
+	@mkdir -p build
 	$(CXX) -c -o $@ $< $(CXXFLAGS)
 
 
