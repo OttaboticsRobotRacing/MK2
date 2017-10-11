@@ -1,25 +1,63 @@
+##################################################
+# Compiler settings
+##################################################
+
 # Set compiler to g++
-CXX=g++
+CXX			= g++
 
-# The CXXFLAGS variable sets compile flags for g++
-# -g			compile with debug information
-# -Wall			give verbose compiler warning
-# -std=c++11	use c++11
-CXXFLAGS=`pkg-config --cflags --libs opencv` -I./include -g -Wall
+# Compiler flags
+XFLAGS		= -g -Wall -std=c++11
 
-# list of objects
-_OBJECTS=test.o
-OBJECTS=$(patsubst %,build/%,$(_OBJECTS))
+##################################################
+# Directory macros
+##################################################
 
+IDIR		= ./include
+OBJDIR		= build
+SRCDIR		= src
+OUTDIR		= bin
+
+##################################################
+# Required object dependencies
+##################################################
+
+_OBJECTS	= test.o
+OBJECTS		= $(patsubst %,$(OBJDIR)/%,$(_OBJECTS))
+
+##################################################
+# Libraries
+##################################################
+
+# OpenCV library
+INC1		= `pkg-config --cflags --libs opencv`
+# User-created headers
+INC2		= -I$(IDIR)
+
+INCDIRS		= $(INC1) $(INC2)
+
+##################################################
+# Compiler flags
+##################################################
+
+CXXFLAGS	= $(INCDIRS) $(XFLAGS)
+
+##################################################
+# Make rules
+##################################################
+
+.PHONY: all
 all: $(OBJECTS)
-	@echo $(CXX) $(OBJECTS) src/main.cpp -o bin/main $(CXXFLAGS)
-	$(CXX) $(OBJECTS) src/main.cpp -o bin/main $(CXXFLAGS)
+	@echo "\n----- Compiling main -----\n"
+	@echo $(CXX) $(OBJECTS) $(SRCDIR)/main.cpp -o $(OUTDIR)/main $(CXXFLAGS)
+	$(CXX) $(OBJECTS) $(SRCDIR)/main.cpp -o $(OUTDIR)/main $(CXXFLAGS)
 
-build/%.o: src/%.cpp
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
+	@echo "\n----- Compiling object file:" $@ "from" $< "-----\n"
 	@echo $(CXX) -c -o $@ $< $(CXXFLAGS)
 	$(CXX) -c -o $@ $< $(CXXFLAGS)
 
 
 .PHONY: clean
 clean:
-	rm -rf build/*.o
+	@echo "\n----- Cleaning object files -----\n"
+	rm -rf $(OBJDIR)/*.o
