@@ -5,7 +5,7 @@ CXX=g++
 # -g			compile with debug information
 # -Wall			give verbose compiler warning
 # -std=c++11	use c++11
-CXXFLAGS=`pkg-config --cflags --libs opencv` -g -Wall
+CXXFLAGS=`pkg-config --cflags --libs opencv` -I./include -g -Wall
 
 # list of objects
 _OBJECTS=test.o
