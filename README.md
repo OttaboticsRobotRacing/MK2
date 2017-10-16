@@ -32,4 +32,4 @@ Source files
 
 #### test
 
-All test code, including POC code
+All test code
