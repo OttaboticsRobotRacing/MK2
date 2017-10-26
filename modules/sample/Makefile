@@ -22,6 +22,7 @@ TESTDIR		:= test/
 # Required object dependencies
 ##################################################
 
+# Update this line with list of objects to be compiled
 _OBJECTS	:= sample.o
 OBJECTS		:= $(patsubst %,$(OBJDIR)/%,$(_OBJECTS))
 
