@@ -10,7 +10,7 @@ int main()
 {
     cout << "test" << endl;
     cout << "opencv version: " << CV_VERSION << endl;
-    sample_function();
+    sample::sample_function();
 
     return 0;
 }

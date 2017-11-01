@@ -5,8 +5,11 @@ using std::cout;
 using std::endl;
 using std::cin;
 
-void sample_function()
+namespace sample
 {
-    cout << "sample_function" << endl;
-    cout << "opencv version: " << CV_VERSION << endl;
+    void sample_function()
+    {
+        cout << "sample_function" << endl;
+        cout << "opencv version: " << CV_VERSION << endl;
+    }
 }
