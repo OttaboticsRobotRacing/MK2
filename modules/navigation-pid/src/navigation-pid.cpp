@@ -171,4 +171,26 @@ namespace navigation_pid
 
         return lines;
     }
+
+    std::vector<LineEquation> findLineEquations(cv::Mat source)
+    {
+        std::vector<cv::Vec4i> lines = findLines(source);
+        std::vector<navigation_pid::LineEquation> line_equations;
+
+        for (auto i : lines)
+        {
+            line_equations.push_back(navigation_pid::LineEquation(i));
+        }
+        return line_equations;
+    }
+
+    int calculateDistanceToLine(std::vector<LineEquation>)
+    {
+        return -1;
+    }
+
+    double calculateSteeringAngle(cv::Mat src_left, cv::Mat src_right)
+    {
+        return -1;
+    }
 }
