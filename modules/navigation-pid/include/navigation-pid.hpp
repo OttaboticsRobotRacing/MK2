@@ -1,11 +1,11 @@
-#ifndef LANE_DETECTION_H
-#define LANE_DETECTION_H
+#ifndef NAVIGATION_PID_H
+#define NAVIGATION_PID_H
 
 #include <iostream>
 #include <vector>
 #include "opencv2/opencv.hpp"
 
-namespace lane_detection
+namespace navigation_pid
 {
     class LineEquation
     {

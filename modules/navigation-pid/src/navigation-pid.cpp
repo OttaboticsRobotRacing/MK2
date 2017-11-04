@@ -1,13 +1,13 @@
 #include <iostream>
 #include <vector>
 #include "opencv2/opencv.hpp"
-#include "lane-detection.hpp"
+#include "navigation-pid.hpp"
 
 using std::cout;
 using std::endl;
 using std::cin;
 
-namespace lane_detection
+namespace navigation_pid
 {
     double LineEquation::findSlope()
     {

@@ -23,7 +23,7 @@ TESTDIR		:= test/
 ##################################################
 
 # Update this line with list of objects to be compiled
-_OBJECTS	:= lane-detection.o
+_OBJECTS	:= navigation-pid.o
 OBJECTS		:= $(patsubst %,$(OBJDIR)/%,$(_OBJECTS))
 
 ##################################################

@@ -1,6 +1,6 @@
 #include <iostream>
 #include "opencv2/opencv.hpp"
-#include "lane-detection.hpp"
+#include "navigation-pid.hpp"
 
 using std::cout;
 using std::endl;
@@ -36,12 +36,12 @@ int main()
         //GaussianBlur(edges, edges, Size(7,7), 1.5, 1.5);
         //Canny(edges, edges, 0, 30, 3);
 
-        frame = lane_detection::preprocess(frame);
+        frame = navigation_pid::preprocess(frame);
 
         cv::cvtColor(frame, frame, cv::COLOR_GRAY2BGR);
 
-        std::vector<cv::Vec4i> lines = lane_detection::findLines(frame);
-        std::vector<lane_detection::LineEquation> line_equations;
+        std::vector<cv::Vec4i> lines = navigation_pid::findLines(frame);
+        std::vector<navigation_pid::LineEquation> line_equations;
 
         for (size_t i = 0; i < lines.size(); ++i)
         {
@@ -49,7 +49,7 @@ int main()
             line(frame, cv::Point(l[0], l[1]), cv::Point(l[2], l[3]), cv::Scalar(0, 255, 0), 2, LINE_AA);
             circle(frame, cv::Point(l[0], l[1]), 3, cv::Scalar(255, 0, 0), 2);
             circle(frame, cv::Point(l[2], l[3]), 3, cv::Scalar(255, 0, 0), 2);
-            line_equations.push_back(lane_detection::LineEquation(l));
+            line_equations.push_back(navigation_pid::LineEquation(l));
         }
 
         int x = frame.cols / 2;
