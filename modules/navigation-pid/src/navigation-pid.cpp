@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+#include <chrono>
+#include <unistd.h>
 #include "opencv2/opencv.hpp"
 #include "navigation-pid.hpp"
 
@@ -7,8 +9,18 @@ using std::cout;
 using std::endl;
 using std::cin;
 
+using std::chrono::milliseconds;
+using std::chrono::duration_cast;
+using std::chrono::system_clock;
+
+using std::chrono::high_resolution_clock;
+using std::chrono::duration;
+using std::chrono::microseconds;
+
 namespace navigation_pid
 {
+    /////////////// LineEquation class ///////////////
+
     double LineEquation::findSlope()
     {
         double d_x = points_[2] - points_[0];
@@ -53,6 +65,70 @@ namespace navigation_pid
         return points_;
     }
 
+    /////////////// LineEquation class - end ///////////////
+
+    /////////////// PID class ///////////////
+
+    PID::PID(double k_p, double k_i, double k_d):
+        k_p_(k_p),
+        k_i_(k_i),
+        k_d_(k_d),
+        setpoint_(0),
+        error_p_(0),
+        error_i_(0),
+        error_d_(0),
+        error_prev_(0),
+        prev_time_us_(high_resolution_clock::now()),
+        prev_time_ms_(time(0))
+    {
+        usleep(1000);
+    }
+
+    PID::~PID()
+    {}
+
+    void PID::setSetpoint(double setpoint)
+    {
+        setpoint_ = setpoint;
+    }
+
+    double PID::getNext(double left, double right)
+    {
+        // set time interval in microseconds
+        high_resolution_clock::time_point currentTime = high_resolution_clock::now();
+        high_resolution_clock::duration elapsed_us = currentTime - prev_time_us_;
+        microseconds microsecondstest = duration_cast<microseconds>(elapsed_us);
+
+        time_interval_ = microsecondstest.count();
+
+        prev_time_us_ = currentTime;
+
+        // calculate current error value
+        error_p_ = right - left - setpoint_;
+
+        // add current error to error integral
+        error_i_ += error_p_;
+
+        // calculate derivative
+        error_d_ = (error_p_ - error_prev_) / static_cast<double>(time_interval_);
+        error_prev_ = error_p_;
+
+        // calculate output
+        double proportional = k_p_ * error_p_;
+        double integral = k_i_ * error_i_;
+        double derivative = k_d_ * error_d_;
+
+        cout << "P: " << proportional << endl;
+        cout << "I: " << integral << endl;
+        cout << "D: " << derivative << endl;
+
+        double turn = proportional + integral + derivative;
+
+        return turn;
+    }
+
+    /////////////// PID class - end ///////////////
+
 
     cv::Mat preprocess(cv::Mat source)
     {
@@ -62,24 +138,24 @@ namespace navigation_pid
             return source;
         }
 
-    cv::Mat output;
+        cv::Mat output;
 
-    // check colour space
-    cout << source.channels() << endl;
-    if (source.channels() != 1)
-    {
-        cout << "Converting image to greyscale" << endl;
-    }
-    // convert to greyscale if source isn't already
+        // check colour space
+        cout << source.channels() << endl;
+        if (source.channels() != 1)
+        {
+            cout << "Converting image to greyscale" << endl;
+        }
+        // convert to greyscale if source isn't already
 
 
-    // apply a bit of blur to remove high frequency noise
-    cv::cvtColor(source, output, cv::COLOR_BGR2GRAY);
-    cv::GaussianBlur(output, output, cv::Size(7,7), 1.5, 1.5);
-    // cv::Canny(output, output, 0, 30, 3);
+        // apply a bit of blur to remove high frequency noise
+        cv::cvtColor(source, output, cv::COLOR_BGR2GRAY);
+        cv::GaussianBlur(output, output, cv::Size(7,7), 1.5, 1.5);
+        // cv::Canny(output, output, 0, 30, 3);
 
-    // return processed image
-    return output;
+        // return processed image
+        return output;
     }
 
     std::vector<cv::Vec4i> findLines(cv::Mat source)
