@@ -3,6 +3,17 @@
 #include <unistd.h>
 #include "pid.hpp"
 
+using std::cout;
+using std::endl;
+
+using std::chrono::milliseconds;
+using std::chrono::duration_cast;
+using std::chrono::system_clock;
+
+using std::chrono::high_resolution_clock;
+using std::chrono::duration;
+using std::chrono::microseconds;
+
 namespace navigation_pid
 {
     PID::PID(double k_p, double k_i, double k_d):

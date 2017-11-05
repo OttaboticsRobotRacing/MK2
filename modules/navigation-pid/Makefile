@@ -23,7 +23,7 @@ TESTDIR		:= test/
 ##################################################
 
 # Update this line with list of objects to be compiled
-_OBJECTS	:= navigation-pid.o line-equation.o
+_OBJECTS	:= navigation-pid.o line-equation.o pid.o
 OBJECTS		:= $(patsubst %,$(OBJDIR)/%,$(_OBJECTS))
 
 ##################################################
