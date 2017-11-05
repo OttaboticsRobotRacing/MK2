@@ -1,6 +1,7 @@
 #include <iostream>
 #include "opencv2/opencv.hpp"
 #include "navigation-pid.hpp"
+#include "line-equation.hpp"
 
 using std::cout;
 using std::endl;
