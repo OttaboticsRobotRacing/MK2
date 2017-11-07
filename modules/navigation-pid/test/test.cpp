@@ -14,6 +14,13 @@ int main()
     cout << "test" << endl;
     cout << "opencv version: " << CV_VERSION << endl;
 
+    if (!std::ifstream("temp/road_01.jpg"))
+    {
+        cout << "Test file does not exist... Downloading..." << endl;
+        system("mkdir -p temp");
+        system("wget -O temp/road_01.jpg http://static-15.sinclairstoryline.com/resources/media/305d4c9b-92d5-48d8-a562-188442d31a47-large16x9_ThinkstockPhotos506008882.jpg?1493652604697");
+    }
+
     /*
     VideoCapture cap(0);
     if (!cap.isOpened())
@@ -27,7 +34,6 @@ int main()
     namedWindow("edges", 1);
 
     frame = imread("temp/road_01.jpg", 1);
-
 
     for (;;)
     {
