@@ -65,9 +65,25 @@ namespace navigation_pid
         return line_equations;
     }
 
-    int calculateDistanceToLine(std::vector<LineEquation>)
+    double calculateDistanceToLine(std::vector<LineEquation> line_equations, int x)
     {
-        return -1;
+        if (line_equations.size() <= 0)
+        {
+            return -1;
+        }
+
+        LineEquation shortestLine = line_equations[0];
+        double distance = shortestLine.findIntersection(x);
+
+        for (auto i : line_equations)
+        {
+            if (i.findIntersection(x) > distance)
+            {
+                shortestLine = i;
+                distance = i.findIntersection(x);
+            }
+        }
+        return distance;
     }
 
     double calculateSteeringAngle(cv::Mat src_left, cv::Mat src_right)
@@ -77,6 +93,7 @@ namespace navigation_pid
 
     LineEquation findClosestLine(std::vector<LineEquation> lines)
     {
+        //TODO: need to handle case where no lines are detected
         return lines[0];
     }
 

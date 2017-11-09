@@ -2,6 +2,7 @@
 #include "opencv2/opencv.hpp"
 #include "navigation-pid.hpp"
 #include "line-equation.hpp"
+#include "pid.hpp"
 #include "framerate.hpp"
 
 using std::cout;
@@ -15,6 +16,7 @@ int main()
     cout << "test" << endl;
     cout << "opencv version: " << CV_VERSION << endl;
 
+    // download the test image into temp/road_01.jpg
     if (!std::ifstream("temp/road_01.jpg"))
     {
         cout << "Test file does not exist... Downloading..." << endl;
@@ -48,8 +50,9 @@ int main()
         usingWebcam = true;
     }
 
-
     Framerate framerate;
+
+    navigation_pid::PID pid(1, 0.5, 0.5);
 
     for (;;)
     {
@@ -58,7 +61,6 @@ int main()
             camera_left >> frame_left;
             camera_right >> frame_right;
 
-            // frame = navigation_pid::preprocess(frame_left);
             frame_left = navigation_pid::preprocess(frame_left);
             frame_right = navigation_pid::preprocess(frame_right);
 
@@ -74,7 +76,6 @@ int main()
         std::vector<navigation_pid::LineEquation> line_equations_right = navigation_pid::findLineEquations(frame_right);
 
         // draw lines onto the frame
-
         frame_left = navigation_pid::drawLines(frame_left, lines_left);
         frame_right = navigation_pid::drawLines(frame_right, lines_right);
 
@@ -86,6 +87,10 @@ int main()
         line(frame_right, cv::Point(x_right, 0), cv::Point(x_right, frame_right.rows - 1), cv::Scalar(127, 127, 127), 1, LINE_AA);
 
         // check intercepts for list of lines
+
+        std::vector<navigation_pid::LineEquation> valid_line_equations_left;
+        std::vector<navigation_pid::LineEquation> valid_line_equations_right;
+
         for (auto i : line_equations_left)
         {
             int y = i.findIntersection(x_left);
@@ -93,9 +98,11 @@ int main()
             // check if intercept is in the image
             if (y >= 0 && y < frame_left.rows)
             {
+                // display lines which intersect
                 cv::Vec4i points = i.getPoints();
                 line(frame_left, cv::Point(points[0], points[1]), cv::Point(points[2], points[3]), cv::Scalar(255, 0, 255), 2, LINE_AA);
                 circle(frame_left, cv::Point(x_left, y), 3, cv::Scalar(0, 0, 255), 2);
+                valid_line_equations_left.push_back(i);
             }
         }
 
@@ -106,22 +113,33 @@ int main()
             // check if intercept is in the image
             if (y >= 0 && y < frame_right.rows)
             {
+                // display lines which intersect
                 cv::Vec4i points = i.getPoints();
                 line(frame_right, cv::Point(points[0], points[1]), cv::Point(points[2], points[3]), cv::Scalar(255, 0, 255), 2, LINE_AA);
                 circle(frame_right, cv::Point(x_right, y), 3, cv::Scalar(0, 0, 255), 2);
+                valid_line_equations_right.push_back(i);
             }
         }
 
+        double left_distance = calculateDistanceToLine(valid_line_equations_left, x_left);
+        double right_distance = calculateDistanceToLine(valid_line_equations_right, x_right);
 
-        //cout << "Line: " << lines[0] << endl;
-        //cout << "Line eq size: " << line_equations.size() << endl;
+        if (left_distance == -1)
+            left_distance = 0;
+        if (right_distance == -1)
+            right_distance = 0;
 
-        //line_equations[0].print();
+        circle(frame_left, cv::Point(x_left, left_distance), 5, cv::Scalar(255, 255, 0), 2);
+        circle(frame_right, cv::Point(x_right, right_distance), 5, cv::Scalar(255, 255, 0), 2);
+
+        cout << "Left distance: " << left_distance << endl;
+        cout << "Right distance: " << right_distance << endl;
+
+        cout << "PID: " << pid.getNext(frame_left.rows - left_distance, frame_right.rows - right_distance) << endl;
+
 
         imshow("left_window", frame_left);
         imshow("right_window", frame_right);
-
-        //sleep(1);
 
         framerate.printFramerate();
 
@@ -137,7 +155,6 @@ int main()
             waitKey(0);
             break;
         }
-
     }
 
     return 0;
