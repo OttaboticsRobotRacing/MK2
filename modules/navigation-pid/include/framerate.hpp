@@ -16,9 +16,12 @@ using std::chrono::microseconds;
 class Framerate
 {
     high_resolution_clock::time_point prev_time_;
+    long double sum_;
+    long int numberOfFrames_;
 public:
     Framerate();
     void printFramerate();
+    void printAverage();
 };
 
 

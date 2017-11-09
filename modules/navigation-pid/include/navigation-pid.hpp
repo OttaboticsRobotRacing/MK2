@@ -14,5 +14,7 @@ namespace navigation_pid
     std::vector<LineEquation> findLineEquations(cv::Mat source);
     int calculateDistanceToLine(std::vector<LineEquation>);
     double calculateSteeringAngle(cv::Mat src_left, cv::Mat src_right);
+    LineEquation findClosestLine(std::vector<LineEquation>);
+    cv::Mat drawLines(cv::Mat, std::vector<cv::Vec4i>);
 }
 #endif

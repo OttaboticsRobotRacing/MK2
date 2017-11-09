@@ -74,4 +74,21 @@ namespace navigation_pid
     {
         return -1;
     }
+
+    LineEquation findClosestLine(std::vector<LineEquation> lines)
+    {
+        return lines[0];
+    }
+
+    cv::Mat drawLines(cv::Mat frame, std::vector<cv::Vec4i> lines)
+    {
+        for (size_t i = 0; i < lines.size(); ++i)
+        {
+            cv::Vec4i l = lines[i];
+            line(frame, cv::Point(l[0], l[1]), cv::Point(l[2], l[3]), cv::Scalar(0, 255, 0), 2, cv::LINE_AA);
+            circle(frame, cv::Point(l[0], l[1]), 3, cv::Scalar(255, 0, 0), 2);
+            circle(frame, cv::Point(l[2], l[3]), 3, cv::Scalar(255, 0, 0), 2);
+        }
+        return frame;
+    }
 }

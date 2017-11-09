@@ -23,7 +23,7 @@ TESTDIR		:= test/
 ##################################################
 
 # Update this line with list of objects to be compiled
-_OBJECTS	:= navigation-pid.o line-equation.o pid.o
+_OBJECTS	:= navigation-pid.o line-equation.o pid.o framerate.o
 OBJECTS		:= $(patsubst %,$(OBJDIR)/%,$(_OBJECTS))
 
 ##################################################
@@ -60,6 +60,13 @@ test: $(OBJECTS)
 	@mkdir -p build
 	@mkdir -p bin
 	$(CXX) $(OBJECTS) $(TESTDIR)test.cpp -o $(OUTDIR)test $(CXXFLAGS)
+
+.PHONY: framerate
+framerate: $(OBJECTS)
+	@echo "\n----- Compiling framerate -----\n"
+	@mkdir -p build
+	@mkdir -p bin
+	$(CXX) $(OBJECTS) $(TESTDIR)test_framerate.cpp -o $(OUTDIR)framerate $(CXXFLAGS)
 
 $(OBJDIR)%.o: $(SRCDIR)%.cpp
 	@echo "\n----- Compiling object file:" $@ "from" $< "-----\n"
