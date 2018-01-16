@@ -1,13 +1,5 @@
-#include <string.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <termios.h>
 #include <iostream>
-#include <sstream>
-#include <string>
-
+#include "arduino-serial-communication.hpp"
 
 struct termios tio;
 struct termios stdio;
@@ -55,11 +47,13 @@ std::string writeSerial(const char *message)
 
     close(tty_fd);
 
+    usleep(100000);
+
     return retval;
 }
 
-
-void setup(){
+void setup()
+{
     fd_set rdset;
 
     memset(&stdio,0,sizeof(stdio));
@@ -82,30 +76,4 @@ void setup(){
     tio.c_lflag=0;
     tio.c_cc[VMIN]=1;
     tio.c_cc[VTIME]=5;
-}
-
-void test()
-{
-    setup();
-
-    for (int i = 0; i <= 999; i += 82)
-    {
-        std::ostringstream strm;
-        strm << i;
-        std::string s = strm.str();
-        s = "a" + s;
-        s += "\n";
-        const char *c = {s.c_str()};
-        setup();
-        std::cout << writeSerial(c) << std::endl;
-        usleep(100000);
-    }
-    writeSerial(" ");
-}
-
-int main()
-{
-    test();
-
-    return 0;
 }
