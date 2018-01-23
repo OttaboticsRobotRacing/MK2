@@ -12,9 +12,7 @@
 #include <fcntl.h>
 #include <termios.h>
 #include <iostream>
-#include <sstream>
-#include <string>
-
+#include "arduino-serial-communication.hpp"
 
 struct termios tio;
 struct termios stdio;
@@ -70,6 +68,8 @@ std::string writeSerial(const char *message)
 
     close(tty_fd);
 
+    usleep(100000);
+
     return retval;
 }
 
@@ -80,7 +80,8 @@ std::string writeSerial(const char *message)
  *  @author Jimmy Deng
  *  @date   2018-01-22
  */
-void setup(){
+void setup()
+{
     fd_set rdset;
 
     memset(&stdio,0,sizeof(stdio));
