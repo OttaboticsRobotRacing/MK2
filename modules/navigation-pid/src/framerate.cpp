@@ -1,3 +1,10 @@
+/** 
+ *  @file   framerate.cpp
+ *  @brief  Framerate counter
+ *
+ *  @author Jimmy Deng
+ *  @date   2018-01-22
+ */
 #include <iostream>
 #include <chrono>
 #include <unistd.h>
@@ -14,11 +21,22 @@ using std::chrono::high_resolution_clock;
 using std::chrono::duration;
 using std::chrono::microseconds;
 
+/**
+ *  @brief  Framerate class constructor.
+ *  @author Jimmy Deng
+ *  @date   2018-01-22
+ */
+
 Framerate::Framerate(): sum_(0), numberOfFrames_(0)
 {
     prev_time_ = high_resolution_clock::now();
 }
 
+/**
+ *  @brief  Prints framerate information to console.
+ *  @author Jimmy Deng
+ *  @date   2018-01-22
+ */
 void Framerate::printFramerate()
 {
     high_resolution_clock::time_point current_time = high_resolution_clock::now();
@@ -37,6 +55,11 @@ void Framerate::printFramerate()
     numberOfFrames_++;
 }
 
+/**
+ *  @brief  Prints average framerate.
+ *  @author Jimmy Deng
+ *  @date   2018-01-22
+ */
 void Framerate::printAverage()
 {
     cout << "==============================\nAverage framerate: "

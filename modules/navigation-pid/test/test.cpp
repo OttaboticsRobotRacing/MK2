@@ -1,3 +1,10 @@
+/** 
+ *  @file   test.cpp
+ *  @brief  Testing script for the PID navigation strategy
+ *
+ *  @author Jimmy Deng
+ *  @date   2018-01-22
+ */
 #include <iostream>
 #include "opencv2/opencv.hpp"
 #include "navigation-pid.hpp"

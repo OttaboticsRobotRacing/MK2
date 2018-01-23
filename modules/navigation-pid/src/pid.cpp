@@ -1,3 +1,10 @@
+/** 
+ *  @file   pid.cpp
+ *  @brief  PID controller for two distance inputs
+ *
+ *  @author Jimmy Deng
+ *  @date   2018-01-22
+ */
 #include <iostream>
 #include <chrono>
 #include <unistd.h>
@@ -16,6 +23,16 @@ using std::chrono::microseconds;
 
 namespace navigation_pid
 {
+    /**
+     *  
+     *
+     *  @brief  PID controller constructor
+     *  @author Jimmy Deng
+     *  @param  k_p Proportional constant
+     *  @param  k_i Integral constant
+     *  @param  k_d Derivative constant
+     *  @date   2018-01-22
+     */
     PID::PID(double k_p, double k_i, double k_d):
         k_p_(k_p),
         k_i_(k_i),
@@ -31,14 +48,38 @@ namespace navigation_pid
         usleep(1000);
     }
 
+    /**
+     *  
+     *
+     *  @brief  PID controller destructor
+     *  @author Jimmy Deng
+     *  @date   2018-01-22
+     */
     PID::~PID()
     {}
 
+    /**
+     *  
+     *
+     *  @brief  setpoint setter
+     *  @author Jimmy Deng
+     *  @param  setpoint New setpoint
+     *  @date   2018-01-22
+     */
     void PID::setSetpoint(double setpoint)
     {
         setpoint_ = setpoint;
     }
 
+    /**
+     *  
+     *
+     *  @brief  Get next output value
+     *  @author Jimmy Deng
+     *  @param  left Left distance
+     *  @param  right Right distance
+     *  @date   2018-01-22
+     */
     double PID::getNext(double left, double right)
     {
         // set time interval in microseconds
