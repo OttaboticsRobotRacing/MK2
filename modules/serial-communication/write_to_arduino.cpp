@@ -1,3 +1,10 @@
+/** 
+ *  @file   write_to_arduino.cpp
+ *  @brief  Arduino serial communication.
+ *
+ *  @author Jimmy Deng
+ *  @date   2018-01-22
+ */
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -11,15 +18,23 @@
 
 struct termios tio;
 struct termios stdio;
-int tty_fd;
-unsigned char c='D';
+int tty_fd; //!< Serial port
+unsigned char c='D'; //!< Message to send
 
+/**
+ *  Writes message to Arduino board through serial.
+ *
+ *  @brief  Arduino serial communication.
+ *  @author Jimmy Deng
+ *  @param 	message Message to send to Arduino board.
+ *  @date   2018-01-22
+ */
 std::string writeSerial(const char *message)
 {
     tty_fd=open("/dev/ttyUSB0", O_RDWR | O_NONBLOCK);
 
-    cfsetospeed(&tio,B9600);            // 115200 baud
-    cfsetispeed(&tio,B9600);            // 115200 baud
+    cfsetospeed(&tio,B9600);            // 9600 baud
+    cfsetispeed(&tio,B9600);            // 9600 baud
 
     tcsetattr(tty_fd,TCSANOW,&tio);
 
@@ -58,7 +73,13 @@ std::string writeSerial(const char *message)
     return retval;
 }
 
-
+/**
+ *  Setup function for Arduino serial communication.
+ *
+ *  @brief  Setup function
+ *  @author Jimmy Deng
+ *  @date   2018-01-22
+ */
 void setup(){
     fd_set rdset;
 
@@ -84,6 +105,13 @@ void setup(){
     tio.c_cc[VTIME]=5;
 }
 
+/**
+ *  Writes a set of messages to an Arduino board with a 100ms (100000us) delay between each message.
+ *
+ *  @brief  Testing function
+ *  @author Jimmy Deng
+ *  @date   2018-01-22
+ */
 void test()
 {
     setup();

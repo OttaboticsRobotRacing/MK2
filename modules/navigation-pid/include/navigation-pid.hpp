@@ -1,3 +1,10 @@
+/** 
+ *  @file   navigation-pid.hpp
+ *  @brief  Navigation module header using the PID strategy.
+ *
+ *  @author Jimmy Deng
+ *  @date   2018-01-22
+ */
 #ifndef NAVIGATION_PID_H
 #define NAVIGATION_PID_H
 
@@ -14,7 +21,7 @@ namespace navigation_pid
     std::vector<LineEquation> findLineEquations(cv::Mat source);
     double calculateDistanceToLine(std::vector<LineEquation>, int);
     double calculateSteeringAngle(cv::Mat src_left, cv::Mat src_right);
-    LineEquation findClosestLine(std::vector<LineEquation>);
+    LineEquation findClosestLine(std::vector<LineEquation> lines);
     cv::Mat drawLines(cv::Mat, std::vector<cv::Vec4i>);
 }
 #endif
