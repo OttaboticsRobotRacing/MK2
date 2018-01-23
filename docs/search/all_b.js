@@ -1,8 +1,15 @@
 var searchData=
 [
-  ['m_5f',['m_',['../classnavigation__pid_1_1LineEquation.html#a0d7ad77c1b15cd34ae247f47cf502602',1,'navigation_pid::LineEquation']]],
-  ['main',['main',['../modules_2navigation-pid_2test_2test_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;test.cpp'],['../test__framerate_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;test_framerate.cpp'],['../modules_2sample_2test_2test_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;test.cpp'],['../write__to__arduino_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;write_to_arduino.cpp'],['../core_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;core.cpp'],['../test_2test_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;test.cpp']]],
-  ['maxzoom',['maxZoom',['../svgpan_8js.html#ab1ff78f1d09bf7d648d71f2deb471530',1,'svgpan.js']]],
-  ['minzoom',['minZoom',['../svgpan_8js.html#a97580c4c0dc5b11906d8469a9795fa76',1,'svgpan.js']]],
-  ['move',['move',['../svgpan_8js.html#a918b82175d38fc94e5ac4d01ae6bf619',1,'svgpan.js']]]
+  ['pid',['PID',['../classnavigation__pid_1_1PID.html',1,'navigation_pid']]],
+  ['pid',['PID',['../classnavigation__pid_1_1PID.html#a7784d38541b7b1c83182e5e1201d4b64',1,'navigation_pid::PID']]],
+  ['pid_2ecpp',['pid.cpp',['../pid_8cpp.html',1,'']]],
+  ['pid_2ehpp',['pid.hpp',['../pid_8hpp.html',1,'']]],
+  ['points_5f',['points_',['../classnavigation__pid_1_1LineEquation.html#a8b3e7eafc390c0902ce639fdc236b458',1,'navigation_pid::LineEquation']]],
+  ['preprocess',['preprocess',['../namespacenavigation__pid.html#a7869655fd1fce3b49b6e10acc3246634',1,'navigation_pid']]],
+  ['prev_5ftime_5f',['prev_time_',['../classFramerate.html#a94176dd4ea76d06d3fa0857b09ee2044',1,'Framerate']]],
+  ['prev_5ftime_5fms_5f',['prev_time_ms_',['../classnavigation__pid_1_1PID.html#a83fdc3d98da61842ebeb284e47a4b3d8',1,'navigation_pid::PID']]],
+  ['prev_5ftime_5fus_5f',['prev_time_us_',['../classnavigation__pid_1_1PID.html#acf216b07d80bb14359e87d35fc2ba9ad',1,'navigation_pid::PID']]],
+  ['print',['print',['../classnavigation__pid_1_1LineEquation.html#a7be6a4c5a7d10a3deef50f46140cbfe0',1,'navigation_pid::LineEquation']]],
+  ['printaverage',['printAverage',['../classFramerate.html#aa371c1f9db176941167bcda3008f4383',1,'Framerate']]],
+  ['printframerate',['printFramerate',['../classFramerate.html#a3fab453d2e95fac6facffa234116ff7f',1,'Framerate']]]
 ];

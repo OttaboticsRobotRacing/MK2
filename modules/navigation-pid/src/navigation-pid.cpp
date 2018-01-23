@@ -100,7 +100,7 @@ namespace navigation_pid
     /**
      *  Returns shortest distance between the lower edge of the frame at x and a vector of LineEquations.
      *
-     *  @brief  
+     *  @brief  Calculates shortest distance
      *  @author Jimmy Deng
      *  @param  line_equations Vector of LineEquations
      *  @param  x Vertical line, at x
