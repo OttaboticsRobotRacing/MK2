@@ -1,26 +1,31 @@
-MK2 - iteration 2 of BATMOBILE
+# MK2 - iteration 2 of BATMOBILE
 
-# Project Structure
+## Major updates
 
-## Directories
+2018-01-22: added Doxygen documentation which can be found at OttaboticsRobotRacing.github.io/MK2  
+2018-01-24: git branching model change from gitflow to stable mainline
 
-#### bin
+## How to develop for MK2
+
+* clone this repository
+* branch off from master
+* modify or create a new module
+* submit pull request after your code is functional (a code review will be required)
+
+## Project Structure
+
+### bin
 
 The output executables go here
 
-#### doc
+### modules
 
-Notes and documentation
+Modules, ie. navigation, vision, etc. Refer to the sample module for examples
 
-#### modules
-
-Modules, ie. navigation, vision, etc.  
-Refer to the sample module for examples
-
-#### src
+### src
 
 Source files for the core
 
-#### test
+### test
 
-All test code
+All core testing code
